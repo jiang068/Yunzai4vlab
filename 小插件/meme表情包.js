@@ -1,3 +1,4 @@
+//原项目见https://github.com/ikechan8370/yunzai-meme/blob/main/meme.js
 import plugin from '../../lib/plugins/plugin.js'
 import fetch, { File, FormData } from 'node-fetch'
 import fs from 'fs'
