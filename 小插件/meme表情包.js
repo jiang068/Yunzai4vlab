@@ -400,6 +400,7 @@ export class memes extends plugin {
     const resultBuffer = Buffer.from(resultArrayBuffer)
     await fs.writeFileSync(resultFileLoc, resultBuffer)
     await e.reply(segment.image(`file://${resultFileLoc}`), reply)
+    await e.reply([`${target}`])                                           /*  插眼 　*/
     fileLoc && await fs.unlinkSync(fileLoc)
     await fs.unlinkSync(resultFileLoc)
   }
