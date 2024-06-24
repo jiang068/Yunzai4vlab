@@ -13,6 +13,6 @@
 # marry修改版.js 使用方法
 ## 这个插件也需要鸢尾花插件(logier-plugin)；
 ## 但不是拓展插件，是替换插件，释放了“离婚”功能，且离婚不限制次数。
-## 1、将源码直接复制替换掉原文件“marry.js”的内容即可。
+## 1、将源码直接复制替换掉/Miao-Yunzai/plugins/logier-plugin/apps/目录下原文件“marry.js”的内容即可。
 ## 注意名称为“marry.js”，如果直接用我的“marry修改版.js”会不能识别。
 # 所有插件装好后，Yunzai都要重启
