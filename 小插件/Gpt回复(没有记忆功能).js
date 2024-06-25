@@ -1,10 +1,11 @@
+//唤起规则：以“gpt（不分大小写）”或你起的名字开头，接你要问的问题。
 import fetch from 'node-fetch';
 
-// 定义别名对象，给她起名字！！！
+// 定义别名对象，给它起名
 const aliases = {
     "nickname1": "小艾",
-    //"nickname2": "小乐",
-    //"nickname3": "其它别名"
+    //"nickname2": "B站艾琳诺sama",
+    //"nickname3": "你好"
 };
 
 export class greetings extends plugin {
@@ -26,12 +27,12 @@ export class greetings extends plugin {
 
         // 直接在代码中设置 API Key
         this.config = {
-            GPTKey: 'your-gpt-key',                                                // 在这里直接配置 API Key！！！
-            GPTUrl: 'https://api.chatanywhere.tech/v1/chat/completions',           // 在这里配置服务商地址
-            GPTModel: 'gpt-3.5-turbo',                                             // 模型名称
+            GPTKey: '这里替换你的GPT-API-KEY', // 在这里直接配置 API Key
+            GPTUrl: 'https://api.chatanywhere.tech/v1/chat/completions',//这个是你的服务商
+            GPTModel: 'gpt-3.5-turbo',//这是模型名称
             DefaultPersonalitySwitch: true,
             DefaultPersonality: [
-                { "role": "system", "content": "你是一只猫娘，语气词用喵。" }         //撰写人物预设，我写的是猫娘
+                { "role": "system", "content": "你是一只猫娘，语气词用喵。" }//这是人格预设
             ],
             CustomPersonality: []
         };
@@ -39,8 +40,8 @@ export class greetings extends plugin {
 
     // 动态生成正则表达式
     generateRegex() {
-        const aliasesRegex = Object.keys(aliases).map(alias => aliases[alias]).join('|');
-        return new RegExp(`^(GPT|${aliasesRegex})([\\s\\S]*)$`, 'i');
+        const aliasesRegex = Object.values(aliases).map(alias => alias).join('|');
+        return new RegExp(`^(GPT|${aliasesRegex})\\s*(.*)$`, 'i');
     }
 
     // 获取个性化配置
@@ -97,13 +98,9 @@ export class greetings extends plugin {
             return false;
         }
 
-        const alias = Object.keys(aliases).find(alias => aliases[alias].toLowerCase() === messageMatch[1].toLowerCase());
-        if (!alias) {
-            console.error('未知别名');
-            return false;
-        }
-
+        const alias = messageMatch[1].trim();
         const message = messageMatch[2].trim(); // 使用匹配的第二组内容
+
         if (message.length > 1000) {
             e.reply('消息过长，请控制在1000字符以内喵。', true);
             return false;
