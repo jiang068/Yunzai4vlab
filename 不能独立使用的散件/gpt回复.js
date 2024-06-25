@@ -1,3 +1,4 @@
+//这是和鸢尾花捆绑的GPT回复插件，如果要独立插件可以去“小插件”目录下找
 import { gpt, getPersonality } from '../utils/getdate.js';
 import setting from "../model/setting.js";
 
