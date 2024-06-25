@@ -1,30 +1,46 @@
 import fetch from 'node-fetch';
-//gpt3.5回复类插件
+
+// 定义别名对象，给她起名字！！！
+const aliases = {
+    "nickname1": "小艾",
+    //"nickname2": "小乐",
+    //"nickname3": "其它别名"
+};
+
 export class greetings extends plugin {
     constructor() {
         super({
             name: "GPT回复",
             event: "message",
             priority: 4996,
-            rule: [
-                {
-                    reg: '^GPT\\s+([\\s\\S]+)$', // 匹配以“GPT”开头的消息
-                    fnc: 'gptans'
-                },
-            ]
+            rule: []
         });
+
+        // 动态生成正则表达式并设置规则
+        this.rule = [
+            {
+                reg: this.generateRegex(), // 使用动态生成的正则表达式
+                fnc: 'gptans'
+            },
+        ];
 
         // 直接在代码中设置 API Key
         this.config = {
-            GPTKey: 'your-gpt-api-key',                                        // 在这里直接配置 API Key
-            GPTUrl: 'https://api.chatanywhere.tech/v1/chat/completions',       // 在这里配置服务提供方
-            GPTModel: 'gpt-3.5-turbo',                                         // 在这里配置模型
+            GPTKey: 'your-gpt-key',                                                // 在这里直接配置 API Key！！！
+            GPTUrl: 'https://api.chatanywhere.tech/v1/chat/completions',           // 在这里配置服务商地址
+            GPTModel: 'gpt-3.5-turbo',                                             // 模型名称
             DefaultPersonalitySwitch: true,
             DefaultPersonality: [
-                { "role": "system", "content": "你是一只猫娘，语气词用喵。" }    // 在这里配置gpt人设
+                { "role": "system", "content": "你是一只猫娘，语气词用喵。" }         //撰写人物预设，我写的是猫娘
             ],
             CustomPersonality: []
         };
+    }
+
+    // 动态生成正则表达式
+    generateRegex() {
+        const aliasesRegex = Object.keys(aliases).map(alias => aliases[alias]).join('|');
+        return new RegExp(`^(GPT|${aliasesRegex})([\\s\\S]*)$`, 'i');
     }
 
     // 获取个性化配置
@@ -67,20 +83,27 @@ export class greetings extends plugin {
         }
     }
 
-    // 处理以“GPT”开头的消息
+    // 处理以“GPT”或别名开头的消息
     async gptans(e) {
         if (!this.config.GPTKey) {
             console.log('未配置GPTKey');
             return false;
         }
 
-        const messageMatch = typeof e.msg === 'string' && e.msg.match(/^GPT\s+([\s\S]+)$/);
+        const regex = this.generateRegex();
+        const messageMatch = typeof e.msg === 'string' && e.msg.match(regex);
         if (!messageMatch) {
             console.error('消息格式错误或正则匹配失败');
             return false;
         }
 
-        const message = messageMatch[1];
+        const alias = Object.keys(aliases).find(alias => aliases[alias].toLowerCase() === messageMatch[1].toLowerCase());
+        if (!alias) {
+            console.error('未知别名');
+            return false;
+        }
+
+        const message = messageMatch[2].trim(); // 使用匹配的第二组内容
         if (message.length > 1000) {
             e.reply('消息过长，请控制在1000字符以内喵。', true);
             return false;
