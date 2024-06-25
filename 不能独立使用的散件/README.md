@@ -1,4 +1,4 @@
-# gpt回复.js 使用方法
+# gpt回复.js 使用方法//这个插件已更新，见“小插件”目录！
 ## 此插件是我自己改的一个拓展插件，单独放进去用不了的。
 ## 1、确保你的Yunzai安装有鸢尾花插件(logier-plugin)
 ## 2、将gpt回复.js放到/Miao-Yunzai/plugins/logier-plugin/apps/目录下
