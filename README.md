@@ -71,6 +71,10 @@ b)直接从桌面双击进入
 拉取签名程序qsxm
     
     git clone https://gitee.com/summerwood6/qsxm.git
+
+或者
+
+    git clone --depth=1 https://github.com/CikeyQi/unidbg-fetch-qsign-shell.git
 到qsxm目录下用控制台打开screen模式
     
     cd qsxm && screen -S qsxm
