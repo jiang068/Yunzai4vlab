@@ -1,6 +1,6 @@
 // 实现自定义戳一戳交互功能，  
 //支持返回文字图片语音禁言，其中语音需配置ffmpeg
-//原项目gitee地址：https://gitee.com/huangshx2001/yunzai-js-plug-in，我做了改动
+//原项目gitee地址：https://gitee.com/huangshx2001/yunzai-js-plug-in ，我做了改动
 
 
 import plugin from'../../lib/plugins/plugin.js'
@@ -15,8 +15,8 @@ let reply_text = 0.75 //文字回复概率
 let reply_img = 0.0 //图片回复概率
 let reply_voice = 0.0 //语音回复概率
 let mutepick = 0.0 //禁言概率
-let example = 0.1 //拍一拍表情概率
-//     反击 = 0.15
+let example = 0.0 //拍一拍表情概率
+//     反击 = 0.25
 
 
 //定义图片存放路径 默认是Yunzai-Bot/resources/chuochuo
@@ -72,10 +72,10 @@ let voice_list = [
 export class chuo extends plugin{
     constructor(){
     super({
-        name: '戳一戳',
+        name: '戳一戳text',
         dsc: '戳一戳机器人触发效果',
         event: 'notice.group.poke',
-        priority: 48,
+        priority: 5,
         rule: [
             {
                 /** 命令正则匹配 */
